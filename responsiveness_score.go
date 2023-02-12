@@ -21,7 +21,7 @@ func responseviness_score(personal_token string, owner string, repo string) floa
 	}
 	issues, _, err := client.Issues.ListByRepo(ctx, owner, repo, opt)
 	if err != nil {
-		log.Println(err)
+		log.Println("Error:", err)
 		return 0
 	}
 

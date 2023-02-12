@@ -17,13 +17,13 @@ func ramp_up_score(url string) (float64, string, string) {
     if err == nil {
         err = os.RemoveAll(path)
         if err != nil {
-            log.Println(err)
+            log.Println("Error:", err)
             return 0, "", ""
         }
     }
     _, err = exec.Command("mkdir", path).Output()
     if err != nil {
-        log.Println(err)
+        log.Println("Error:", err)
         return 0, "", ""
     }
     _, err = git.PlainClone(path, false, &git.CloneOptions{
@@ -31,16 +31,17 @@ func ramp_up_score(url string) (float64, string, string) {
         RecurseSubmodules: git.DefaultSubmoduleRecursionDepth,
     })
     if err != nil {
-        log.Println(err)
+        log.Println("Error:", err)
         return 0, "", ""
     }
 
     // Use cloc to find the total lines of code
     command_output, err := exec.Command("./cloc", path).Output()
     if err != nil {
-        log.Println(err)
+        log.Println("Error:", err)
         return 0, "", ""
     }
+    // parse out total lines of code and lines of comments
 	re_sum, _ := regexp.Compile("SUM:\\s*\\d+\\s*\\d+\\s*\\d+\\s*\\d+")
     match_sum := re_sum.FindString(string(command_output))
 	re_num_code, _ := regexp.Compile("\\d+")
@@ -49,6 +50,7 @@ func ramp_up_score(url string) (float64, string, string) {
     sugar_logger.Debugf("Number of lines of comments: " + num_code_comment[len(num_code_comment) - 2])
 	num_code, _ := strconv.ParseFloat(num_code_comment[len(num_code_comment) - 1], 64)
 	num_comment, _ := strconv.ParseFloat(num_code_comment[len(num_code_comment) - 2], 64)
+    // Calculate ramp up score
 	code_comment_ratio := 4.0 / ((num_code + 1) / (num_comment + 1))
     sugar_logger.Debugf("Ratio of code to comments: %.1f", code_comment_ratio)
 	score, err := 1.0, nil
@@ -57,10 +59,10 @@ func ramp_up_score(url string) (float64, string, string) {
 	}
 	err = os.RemoveAll(path)
     if err != nil {
-        log.Println(err)
+        log.Println("Error:", err)
         return 0, "", ""
     }
-	// parse user and repo
+	// parse owner and repo name
 	re_user_repo, _ := regexp.Compile("/\\w+/\\w+.git")
     user_repo_raw := re_user_repo.FindString(url)
 	re_user_repo, _ = regexp.Compile("\\w+")

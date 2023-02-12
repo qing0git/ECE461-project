@@ -39,12 +39,16 @@ type package_info struct {
 func get_git_url(npm_url string) string {
 	re_npm_url, _ := regexp.Compile("/\\w+")
     raw_module_name := re_npm_url.FindAllString(npm_url, -1)
+	if len(raw_module_name) == 0 {
+		log.Println("Error: The npmjs url provided is invalid!")
+		return ""
+	}
 	module_name := raw_module_name[len(raw_module_name) - 1]
 	url := fmt.Sprintf("https://registry.npmjs.org/%s", module_name)
 
 	res, err := http.Get(url)
 	if err != nil {
-		log.Println(err)
+		log.Println("Error:", err)
 		return ""
 	}
 	defer res.Body.Close()
@@ -54,7 +58,7 @@ func get_git_url(npm_url string) string {
 	var info package_info
 	err = json.Unmarshal(body, &info)
 	if err != nil {
-		log.Println(err)
+		log.Println("Error:", err)
 		return ""
 	}
 	re_git_url, _ := regexp.Compile("github.com/\\w+/\\w+.git")
@@ -76,6 +80,19 @@ func convert_byte_to_string(b []byte) string {
 }
 
 func analyze_git(old_url string, url string) score_struct {
+	var result score_struct
+	result.URL = old_url
+	result.NET_SCORE = 0.0
+	result.RAMP_UP_SCORE = 0.0
+	result.CORRECTNESS_SCORE = 0.0
+	result.BUS_FACTOR_SCORE = 0.0
+	result.RESPONSIVE_MAINTAINER_SCORE = 0.0
+	result.LICENSE_SCORE = 0.0
+	if url == "" {
+		log.Println("Error: The git url provided is invalid!")
+		return result
+	}
+
 	sugar_logger.Info("Getting ramp-up score...")
 	ramp_up_score_num, owner, repo := ramp_up_score(url)
 	sugar_logger.Info("Completed getting ramp-up score!")
@@ -86,28 +103,29 @@ func analyze_git(old_url string, url string) score_struct {
 	sugar_logger.Info("Getting correctness score...")
 	correctness_score_num := correctness_score(personal_token, owner, repo)
 	sugar_logger.Info("Completed correctness score!")
+
 	sugar_logger.Info("Getting responseviness score...")
 	responseviness_score_num := responseviness_score(personal_token, owner, repo)
 	sugar_logger.Info("Completed getting responseviness score!")
+
 	sugar_logger.Info("Getting bus factor score...")
 	bus_factor_score_num := bus_factor_score(personal_token, owner, repo)
 	sugar_logger.Info("Completed getting bus factor score!")
+
 	sugar_logger.Info("Getting license compatibility score...")
 	license_compatibility_score_num := license_score(personal_token, owner, repo)
 	sugar_logger.Info("Completed getting license compatibility score!")
 
+	// Calculate net score
 	net_score_raw := 0.2 * ramp_up_score_num + 0.2 * correctness_score_num + 0.2 * bus_factor_score_num + 0.3 * responseviness_score_num + 0.1 * license_compatibility_score_num
 	net_score, _ := strconv.ParseFloat(fmt.Sprintf("%.1f", net_score_raw), 64)
-
-	var result score_struct
-	result.URL = old_url
+	
 	result.NET_SCORE = net_score
 	result.RAMP_UP_SCORE = ramp_up_score_num
 	result.CORRECTNESS_SCORE = correctness_score_num
 	result.BUS_FACTOR_SCORE = bus_factor_score_num
 	result.RESPONSIVE_MAINTAINER_SCORE = responseviness_score_num
 	result.LICENSE_SCORE = license_compatibility_score_num
-
 	return result
 }
 
@@ -116,6 +134,7 @@ func calc_score(url_file string) {
 	defer file.Close()
 
 	var scores []score_struct
+	// Process inputted URLs
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -137,14 +156,15 @@ func calc_score(url_file string) {
 			}
 		}
 	}
+
+	// sort URLs based on decending order of net score and output as NDJSON format
 	sort.SliceStable(scores, func(i, j int) bool {
 		return scores[i].NET_SCORE > scores[j].NET_SCORE
 	})
 	for _, score := range scores {
 		b, err := json.Marshal(score)
 		if err != nil {
-			fmt.Println("error:", err)
-			os.Exit(1)
+			log.Fatalln("Error:", err)
 		}
 		fmt.Print(convert_byte_to_string(b))
 	}

@@ -1,0 +1,5 @@
+{"metric":"RAMP_UP_SCORE", "api":"clone", "filepath":"./ramp_up_score.go", "line":29}
+{"metric":"CORRECTNESS_SCORE", "api":"rest", "filepath":"./correctness_score.go", "line":19}
+{"metric":"BUS_FACTOR_SCORE", "api":"rest", "filepath":"./bus_factor_score.go", "line":19}
+{"metric":"RESPONSIVE_MAINTAINER_SCORE", "api":"rest", "filepath":"./responsiveness_score.go", "line":22}
+{"metric":"LICENSE_SCORE", "api":"graphql", "filepath":"./license_score.go", "line":31}

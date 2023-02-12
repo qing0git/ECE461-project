@@ -2,7 +2,7 @@
 if [[ $1 == "install" ]]; then
 if go mod download
 then
-echo "30 dependencies installed..."
+echo "32 dependencies installed..."
 exit 0
 else
 exit 1
@@ -48,7 +48,9 @@ if ./pj $1
 then
 exit 0
 else
-echo "File does not exist!"
 exit 1
 fi
+else
+echo "Error: File does not exist!"
+exit 1
 fi

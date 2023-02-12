@@ -30,13 +30,13 @@ func license_score(personal_token string, owner string, repo string) float64 {
 	}
 	err := client.Query(ctx, &q, variables)
 	if err != nil {
-		log.Println(err)
+		log.Println("Error:", err)
 		return 0
 	}
 
 	sugar_logger.Debugf("License Name:", q.Repository.LicenseInfo.Key)
 	compatible_list := [5]string{"cc0-1.0", "unlicense", "bsd-3-clause", "mit", "lgpl-2.1"}
-	for _, element := range compatible_list{
+	for _, element := range compatible_list {
 		if q.Repository.LicenseInfo.Key == element {
 			return 1.0
 		}
