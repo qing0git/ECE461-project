@@ -37,9 +37,15 @@ func correctness_score(personal_token string, owner string, repo string) float64
 		sugar_logger.Debugf("Number of deletions: %d", deletions)
 		additions := *(weekly_activity[0].Additions)
 		sugar_logger.Debugf("Number of additions: %d", *(weekly_activity[0].Additions))
+		if additions == 0 {
+			return 1.0
+		}
 		score, _ := strconv.ParseFloat(fmt.Sprintf("%.1f", 1 - float64(deletions) / float64(additions)), 64)
 		if score < 0 {
 			score = -1 * score
+		}
+		if score > 1 {
+			score = 1.0
 		}
 		return score
 	}

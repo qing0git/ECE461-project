@@ -36,6 +36,9 @@ func responseviness_score(personal_token string, owner string, repo string) floa
 	}
 	sugar_logger.Debugf("Number of total issues on the first page (max is 100): %d", tot_count)
 	sugar_logger.Debugf("Number of issues with empty comments: %d", empty_comment_count)
+	if tot_count == 0 {
+		return 0.0
+	}
     score, _ := strconv.ParseFloat(fmt.Sprintf("%.1f", float64(empty_comment_count) / float64(tot_count)), 64)
     return 1 - score
 }

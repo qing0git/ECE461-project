@@ -28,5 +28,8 @@ func bus_factor_score(personal_token string, owner string, repo string) float64 
 	}
 	sugar_logger.Debugf("Number of contributors: %d", len(contributors_count))
     score, _ := strconv.ParseFloat(fmt.Sprintf("%.1f", float64(len(contributors_count)) / float64(100)), 64)
+	if score > 1 {
+		score = 1.0
+	}
     return score
 }
