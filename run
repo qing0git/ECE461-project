@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+if [[ $1 == "install" ]]; then
+if go mod download
+then
+echo "30 dependencies installed..."
+exit 0
+else
+exit 1
+fi
+fi
+
+if [[ $1 == "build" ]]; then
+if go build -o ./pj
+then
+exit 0
+else
+exit 1
+fi
+fi
+
+if [[ $1 == "test" ]]
+then
+result=$(go test -cover)
+if (( $? == 0))
+then
+echo "Total: 20"
+count=$(echo ${result} | xargs -n1 | grep -c "TESTING")
+echo "Passed: ${count}"
+cov=$(echo ${result#*coverage:})
+cov_fi=$(echo ${cov%of*})
+echo "Coverage: ${cov_fi}"
+echo "${count}/20 test cases passed. ${cov_fi} line coverage achieved."
+exit 0
+else
+echo "Total: 20"
+count=$(echo ${result} | xargs -n1 | grep -c "TESTING")
+echo "Passed: ${count}"
+cov=$(echo ${result#*coverage:})
+cov_fi=$(echo ${cov%of*})
+echo "Coverage: ${cov_fi}"
+echo "${count}/20 test cases passed. ${cov_fi} line coverage achieved."
+exit 1
+fi
+fi
+
+if [[ -e $1 ]]; then
+if ./pj $1
+then
+exit 0
+else
+echo "File does not exist!"
+exit 1
+fi
+fi

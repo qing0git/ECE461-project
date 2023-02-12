@@ -1,0 +1,100 @@
+2023-02-11T22:56:43.791-0500	info	ECE461-project/pj.go:170	URL: https://github.com/cloudinary/cloudinary_npm.git
+2023-02-11T22:56:43.791-0500	info	ECE461-project/pj.go:111	Getting ramp-up score...
+2023-02-11T22:56:48.206-0500	debug	ECE461-project/ramp_up_score.go:50	Number of sloc: 20912
+2023-02-11T22:56:48.206-0500	debug	ECE461-project/ramp_up_score.go:51	Number of lines of commands: 2648
+2023-02-11T22:56:48.206-0500	debug	ECE461-project/ramp_up_score.go:55	Ratio of code to comments: 0.5
+2023-02-11T22:56:48.305-0500	info	ECE461-project/pj.go:113	Completed getting ramp-up score!
+2023-02-11T22:56:48.305-0500	info	ECE461-project/pj.go:118	Getting correctness score...
+2023-02-11T22:56:48.423-0500	debug	ECE461-project/correctness_score.go:34	Number of deletions: 0
+2023-02-11T22:56:48.424-0500	debug	ECE461-project/correctness_score.go:36	Number of additions: 709
+2023-02-11T22:56:48.424-0500	info	ECE461-project/pj.go:120	Completed correctness score!
+2023-02-11T22:56:48.424-0500	info	ECE461-project/pj.go:121	Getting responseviness score...
+2023-02-11T22:56:48.676-0500	debug	ECE461-project/responsiveness_score.go:36	Number of total issues on the first page (max is 100): 16
+2023-02-11T22:56:48.676-0500	debug	ECE461-project/responsiveness_score.go:37	Number of issues with empty comments: 6
+2023-02-11T22:56:48.676-0500	info	ECE461-project/pj.go:123	Completed getting responseviness score!
+2023-02-11T22:56:48.676-0500	info	ECE461-project/pj.go:124	Getting bus factor score...
+2023-02-11T22:56:49.168-0500	debug	ECE461-project/bus_factor_score.go:27	Number of contributors: 52
+2023-02-11T22:56:49.168-0500	info	ECE461-project/pj.go:126	Completed getting bus factor score!
+2023-02-11T22:56:49.168-0500	info	ECE461-project/pj.go:127	Getting license compatibility score...
+2023-02-11T22:56:49.247-0500	debug	ECE461-project/license_score.go:36	License Name:%!(EXTRA string=)
+2023-02-11T22:56:49.247-0500	info	ECE461-project/pj.go:129	Completed getting license compatibility score!
+2023-02-11T22:56:49.307-0500	info	ECE461-project/pj.go:160	URL: https://github.com/expressjs/express.git
+2023-02-11T22:56:49.308-0500	info	ECE461-project/pj.go:111	Getting ramp-up score...
+2023-02-11T22:57:06.678-0500	debug	ECE461-project/ramp_up_score.go:50	Number of sloc: 20879
+2023-02-11T22:57:06.678-0500	debug	ECE461-project/ramp_up_score.go:51	Number of lines of commands: 2525
+2023-02-11T22:57:06.678-0500	debug	ECE461-project/ramp_up_score.go:55	Ratio of code to comments: 0.5
+2023-02-11T22:57:07.156-0500	info	ECE461-project/pj.go:113	Completed getting ramp-up score!
+2023-02-11T22:57:07.156-0500	info	ECE461-project/pj.go:118	Getting correctness score...
+2023-02-11T22:57:07.254-0500	debug	ECE461-project/correctness_score.go:34	Number of deletions: 42
+2023-02-11T22:57:07.254-0500	debug	ECE461-project/correctness_score.go:36	Number of additions: 680
+2023-02-11T22:57:07.254-0500	info	ECE461-project/pj.go:120	Completed correctness score!
+2023-02-11T22:57:07.254-0500	info	ECE461-project/pj.go:121	Getting responseviness score...
+2023-02-11T22:57:08.125-0500	debug	ECE461-project/responsiveness_score.go:36	Number of total issues on the first page (max is 100): 100
+2023-02-11T22:57:08.126-0500	debug	ECE461-project/responsiveness_score.go:37	Number of issues with empty comments: 7
+2023-02-11T22:57:08.126-0500	info	ECE461-project/pj.go:123	Completed getting responseviness score!
+2023-02-11T22:57:08.126-0500	info	ECE461-project/pj.go:124	Getting bus factor score...
+2023-02-11T22:57:09.086-0500	debug	ECE461-project/bus_factor_score.go:27	Number of contributors: 100
+2023-02-11T22:57:09.086-0500	info	ECE461-project/pj.go:126	Completed getting bus factor score!
+2023-02-11T22:57:09.086-0500	info	ECE461-project/pj.go:127	Getting license compatibility score...
+2023-02-11T22:57:09.163-0500	debug	ECE461-project/license_score.go:36	License Name:%!(EXTRA string=mit)
+2023-02-11T22:57:09.163-0500	info	ECE461-project/pj.go:129	Completed getting license compatibility score!
+2023-02-11T22:57:09.163-0500	info	ECE461-project/pj.go:170	URL: https://github.com/nullivex/nodist.git
+2023-02-11T22:57:09.163-0500	info	ECE461-project/pj.go:111	Getting ramp-up score...
+2023-02-11T22:57:12.294-0500	debug	ECE461-project/ramp_up_score.go:50	Number of sloc: 3283
+2023-02-11T22:57:12.294-0500	debug	ECE461-project/ramp_up_score.go:51	Number of lines of commands: 506
+2023-02-11T22:57:12.294-0500	debug	ECE461-project/ramp_up_score.go:55	Ratio of code to comments: 0.6
+2023-02-11T22:57:12.370-0500	info	ECE461-project/pj.go:113	Completed getting ramp-up score!
+2023-02-11T22:57:12.370-0500	info	ECE461-project/pj.go:118	Getting correctness score...
+2023-02-11T22:57:12.464-0500	debug	ECE461-project/correctness_score.go:34	Number of deletions: 940
+2023-02-11T22:57:12.464-0500	debug	ECE461-project/correctness_score.go:36	Number of additions: 1846
+2023-02-11T22:57:12.464-0500	info	ECE461-project/pj.go:120	Completed correctness score!
+2023-02-11T22:57:12.464-0500	info	ECE461-project/pj.go:121	Getting responseviness score...
+2023-02-11T22:57:12.882-0500	debug	ECE461-project/responsiveness_score.go:36	Number of total issues on the first page (max is 100): 47
+2023-02-11T22:57:12.882-0500	debug	ECE461-project/responsiveness_score.go:37	Number of issues with empty comments: 11
+2023-02-11T22:57:12.882-0500	info	ECE461-project/pj.go:123	Completed getting responseviness score!
+2023-02-11T22:57:12.882-0500	info	ECE461-project/pj.go:124	Getting bus factor score...
+2023-02-11T22:57:13.185-0500	debug	ECE461-project/bus_factor_score.go:27	Number of contributors: 26
+2023-02-11T22:57:13.185-0500	info	ECE461-project/pj.go:126	Completed getting bus factor score!
+2023-02-11T22:57:13.185-0500	info	ECE461-project/pj.go:127	Getting license compatibility score...
+2023-02-11T22:57:13.254-0500	debug	ECE461-project/license_score.go:36	License Name:%!(EXTRA string=mit)
+2023-02-11T22:57:13.254-0500	info	ECE461-project/pj.go:129	Completed getting license compatibility score!
+2023-02-11T22:57:13.254-0500	info	ECE461-project/pj.go:170	URL: https://github.com/lodash/lodash.git
+2023-02-11T22:57:13.254-0500	info	ECE461-project/pj.go:111	Getting ramp-up score...
+2023-02-11T22:57:59.429-0500	debug	ECE461-project/ramp_up_score.go:50	Number of sloc: 24859
+2023-02-11T22:57:59.429-0500	debug	ECE461-project/ramp_up_score.go:51	Number of lines of commands: 6707
+2023-02-11T22:57:59.429-0500	debug	ECE461-project/ramp_up_score.go:55	Ratio of code to comments: 1.1
+2023-02-11T22:57:59.653-0500	info	ECE461-project/pj.go:113	Completed getting ramp-up score!
+2023-02-11T22:57:59.653-0500	info	ECE461-project/pj.go:118	Getting correctness score...
+2023-02-11T22:57:59.733-0500	debug	ECE461-project/correctness_score.go:34	Number of deletions: 793
+2023-02-11T22:57:59.733-0500	debug	ECE461-project/correctness_score.go:36	Number of additions: 4308
+2023-02-11T22:57:59.733-0500	info	ECE461-project/pj.go:120	Completed correctness score!
+2023-02-11T22:57:59.733-0500	info	ECE461-project/pj.go:121	Getting responseviness score...
+2023-02-11T22:58:00.586-0500	debug	ECE461-project/responsiveness_score.go:36	Number of total issues on the first page (max is 100): 100
+2023-02-11T22:58:00.586-0500	debug	ECE461-project/responsiveness_score.go:37	Number of issues with empty comments: 51
+2023-02-11T22:58:00.586-0500	info	ECE461-project/pj.go:123	Completed getting responseviness score!
+2023-02-11T22:58:00.586-0500	info	ECE461-project/pj.go:124	Getting bus factor score...
+2023-02-11T22:58:01.548-0500	debug	ECE461-project/bus_factor_score.go:27	Number of contributors: 100
+2023-02-11T22:58:01.548-0500	info	ECE461-project/pj.go:126	Completed getting bus factor score!
+2023-02-11T22:58:01.548-0500	info	ECE461-project/pj.go:127	Getting license compatibility score...
+2023-02-11T22:58:01.628-0500	debug	ECE461-project/license_score.go:36	License Name:%!(EXTRA string=other)
+2023-02-11T22:58:01.628-0500	info	ECE461-project/pj.go:129	Completed getting license compatibility score!
+2023-02-11T22:58:01.719-0500	info	ECE461-project/pj.go:160	URL: https://github.com/browserify/browserify.git
+2023-02-11T22:58:01.719-0500	info	ECE461-project/pj.go:111	Getting ramp-up score...
+2023-02-11T22:58:11.364-0500	debug	ECE461-project/ramp_up_score.go:50	Number of sloc: 7552
+2023-02-11T22:58:11.364-0500	debug	ECE461-project/ramp_up_score.go:51	Number of lines of commands: 115
+2023-02-11T22:58:11.364-0500	debug	ECE461-project/ramp_up_score.go:55	Ratio of code to comments: 0.1
+2023-02-11T22:58:11.773-0500	info	ECE461-project/pj.go:113	Completed getting ramp-up score!
+2023-02-11T22:58:11.773-0500	info	ECE461-project/pj.go:118	Getting correctness score...
+2023-02-11T22:58:11.847-0500	debug	ECE461-project/correctness_score.go:34	Number of deletions: 9
+2023-02-11T22:58:11.847-0500	debug	ECE461-project/correctness_score.go:36	Number of additions: 81
+2023-02-11T22:58:11.847-0500	info	ECE461-project/pj.go:120	Completed correctness score!
+2023-02-11T22:58:11.847-0500	info	ECE461-project/pj.go:121	Getting responseviness score...
+2023-02-11T22:58:12.719-0500	debug	ECE461-project/responsiveness_score.go:36	Number of total issues on the first page (max is 100): 100
+2023-02-11T22:58:12.719-0500	debug	ECE461-project/responsiveness_score.go:37	Number of issues with empty comments: 25
+2023-02-11T22:58:12.719-0500	info	ECE461-project/pj.go:123	Completed getting responseviness score!
+2023-02-11T22:58:12.719-0500	info	ECE461-project/pj.go:124	Getting bus factor score...
+2023-02-11T22:58:12.878-0500	debug	ECE461-project/bus_factor_score.go:27	Number of contributors: 0
+2023-02-11T22:58:12.878-0500	info	ECE461-project/pj.go:126	Completed getting bus factor score!
+2023-02-11T22:58:12.878-0500	info	ECE461-project/pj.go:127	Getting license compatibility score...
+2023-02-11T22:58:12.960-0500	debug	ECE461-project/license_score.go:36	License Name:%!(EXTRA string=mit)
+2023-02-11T22:58:12.960-0500	info	ECE461-project/pj.go:129	Completed getting license compatibility score!

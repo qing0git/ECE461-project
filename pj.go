@@ -1,0 +1,178 @@
+package main
+
+import (
+	"bufio"
+	"encoding/json"
+	"os"
+	"strconv"
+	"fmt"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+	"io/ioutil"
+	"net/http"
+	"log"
+	"regexp"
+	"sort"
+	"strings"
+)
+
+var logger *zap.Logger
+var sugar_logger *zap.SugaredLogger
+var atomic_level = zap.NewAtomicLevel()
+
+type score_struct struct {
+	URL string
+	NET_SCORE float64
+	RAMP_UP_SCORE float64
+	CORRECTNESS_SCORE float64
+	BUS_FACTOR_SCORE float64
+	RESPONSIVE_MAINTAINER_SCORE float64
+	LICENSE_SCORE float64
+}
+
+type package_info struct {
+	Repository struct {
+		URL string `json:"url"`
+	} `json:"repository"`
+}
+
+func get_git_url(npm_url string) string {
+	re_npm_url, _ := regexp.Compile("/\\w+")
+    raw_module_name := re_npm_url.FindAllString(npm_url, -1)
+	module_name := raw_module_name[len(raw_module_name) - 1]
+	url := fmt.Sprintf("https://registry.npmjs.org/%s", module_name)
+
+	res, err := http.Get(url)
+	if err != nil {
+		log.Println(err)
+		return ""
+	}
+	defer res.Body.Close()
+
+	body, _ := ioutil.ReadAll(res.Body)
+
+	var info package_info
+	err = json.Unmarshal(body, &info)
+	if err != nil {
+		log.Println(err)
+		return ""
+	}
+	re_git_url, _ := regexp.Compile("github.com/\\w+/\\w+.git")
+    match_url := "https://" + re_git_url.FindString(info.Repository.URL)
+	return match_url
+}
+
+func convert_byte_to_string(b []byte) string {
+	str := ""
+	for _, v := range b {
+		if string(v) == "," {
+			str += string(v) + " "
+		} else {
+			str += string(v)
+		}
+	}
+	str += "\n"
+	return str
+}
+
+func analyze_git(old_url string, url string) score_struct {
+	sugar_logger.Info("Getting ramp-up score...")
+	ramp_up_score_num, owner, repo := ramp_up_score(url)
+	sugar_logger.Info("Completed getting ramp-up score!")
+
+	var personal_token string
+	personal_token = os.Getenv("GITHUB_TOKEN")
+    
+	sugar_logger.Info("Getting correctness score...")
+	correctness_score_num := correctness_score(personal_token, owner, repo)
+	sugar_logger.Info("Completed correctness score!")
+	sugar_logger.Info("Getting responseviness score...")
+	responseviness_score_num := responseviness_score(personal_token, owner, repo)
+	sugar_logger.Info("Completed getting responseviness score!")
+	sugar_logger.Info("Getting bus factor score...")
+	bus_factor_score_num := bus_factor_score(personal_token, owner, repo)
+	sugar_logger.Info("Completed getting bus factor score!")
+	sugar_logger.Info("Getting license compatibility score...")
+	license_compatibility_score_num := license_score(personal_token, owner, repo)
+	sugar_logger.Info("Completed getting license compatibility score!")
+
+	net_score_raw := 0.2 * ramp_up_score_num + 0.2 * correctness_score_num + 0.2 * bus_factor_score_num + 0.3 * responseviness_score_num + 0.1 * license_compatibility_score_num
+	net_score, _ := strconv.ParseFloat(fmt.Sprintf("%.1f", net_score_raw), 64)
+
+	var result score_struct
+	result.URL = old_url
+	result.NET_SCORE = net_score
+	result.RAMP_UP_SCORE = ramp_up_score_num
+	result.CORRECTNESS_SCORE = correctness_score_num
+	result.BUS_FACTOR_SCORE = bus_factor_score_num
+	result.RESPONSIVE_MAINTAINER_SCORE = responseviness_score_num
+	result.LICENSE_SCORE = license_compatibility_score_num
+
+	return result
+}
+
+func calc_score(url_file string) {
+	file, _ := os.Open(url_file)
+	defer file.Close()
+
+	var scores []score_struct
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if strings.Contains(line, "npmjs") {
+			new_line := get_git_url(line)
+			sugar_logger.Infof("URL: " + new_line)
+			result := analyze_git(line, new_line)
+			scores = append(scores, result)
+		} else {
+			if strings.Contains(line, ".git") {
+				sugar_logger.Infof("URL: " + line)
+				result := analyze_git(line, line)
+				scores = append(scores, result)
+			} else {
+				new_line := line + ".git"
+				sugar_logger.Infof("URL: " + new_line)
+				result := analyze_git(line, new_line)
+				scores = append(scores, result)
+			}
+		}
+	}
+	sort.SliceStable(scores, func(i, j int) bool {
+		return scores[i].NET_SCORE > scores[j].NET_SCORE
+	})
+	for _, score := range scores {
+		b, err := json.Marshal(score)
+		if err != nil {
+			fmt.Println("error:", err)
+			os.Exit(1)
+		}
+		fmt.Print(convert_byte_to_string(b))
+	}
+}
+
+func init() {
+	// Set up logger
+	encode_config := zap.NewProductionEncoderConfig()
+	encode_config.EncodeTime = zapcore.ISO8601TimeEncoder
+	log_file, _ := os.Create(os.Getenv("LOG_FILE"))
+	core := zapcore.NewCore(
+		zapcore.NewConsoleEncoder(encode_config), 
+		zapcore.AddSync(log_file), atomic_level)
+	logger = zap.New(core, zap.AddCaller())
+	sugar_logger = logger.Sugar()
+	defer sugar_logger.Sync()
+	log_level, _ := strconv.Atoi(os.Getenv("LOG_LEVEL"))
+	atomic_level.SetLevel(zap.FatalLevel)
+	switch log_level {
+		case 1:
+			atomic_level.SetLevel(zap.InfoLevel)
+		case 2:
+			atomic_level.SetLevel(zap.DebugLevel)
+		default:
+			atomic_level.SetLevel(zap.FatalLevel)
+	}
+}
+
+func main() {
+	calc_score(os.Args[1])
+}
