@@ -63,9 +63,9 @@ func ramp_up_score(url string) (float64, string, string) {
         return 0, "", ""
     }
 	// parse owner and repo name
-	re_user_repo, _ := regexp.Compile("/\\w+/\\w+.git")
+	re_user_repo, _ := regexp.Compile("/([A-Za-z0-9_-])+/([A-Za-z0-9_-])+.git")
     user_repo_raw := re_user_repo.FindString(url)
-	re_user_repo, _ = regexp.Compile("\\w+")
+	re_user_repo, _ = regexp.Compile("([A-Za-z0-9_-])+")
 	user_repo := re_user_repo.FindAllString(user_repo_raw, -1)
 	return score, user_repo[0], user_repo[1]
 }
