@@ -19,7 +19,6 @@ func correctness_score(personal_token string, owner string, repo string) float64
 	weekly_activity, _, err := client.Repositories.ListCodeFrequency(ctx, owner, repo)
 	if err != nil {
 		if _, ok := err.(*github.AcceptedError); ok {
-			log.Println("The information required is not yet ready and was scheduled on GitHub side. Please try again later.")
 			return 0
 		} else {
 			log.Println("Error:", err)
